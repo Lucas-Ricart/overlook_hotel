@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Liste des chambres</title>
+</head>
+
+<body>
+    <h1>Liste des chambres</h1>
+    <table border="1">
+        <tr>
+            <th>Numéro</th>
+            <th>lit(s)</th>
+            <th>Prix</th>
+            <th>Disponible</th>
+        </tr>
+        <tr th:each="chambre : ${chambres}">
+            <td th:text="${chambre.numero}"></td>
+            <td th:text="${chambre.nb_personne}"></td>
+            <td th:text="${chambre.prix}"></td>
+            <td th:text="${chambre.disponible} ? 'Oui' : 'Non'"></td>
+        </tr>
+    </table>
+</body>
+
+</html>
