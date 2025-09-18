@@ -2,7 +2,7 @@ package com.joel_lucas_thibault.overlook_hotel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ChambreRepository extends JpaRepository<Chambre, Long> {
+public interface EventRepository extends JpaRepository<Event, Long> {
 }
 
 //findAll : List<Chambre> findAll() (recupérer toutes les chambres);

@@ -2,23 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Liste des chambres</title>
+    <title>Liste des événements</title>
 </head>
 
 <body>
-    <h1>Liste des chambres</h1>
+    <h1>Liste des événements</h1>
     <table border="1">
         <tr>
-            <th>Numéro</th>
-            <th>lit(s)</th>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>Heure</th>
             <th>Prix</th>
-            <th>Disponible</th>
+            <th>Places disponibles</th>
+            <th>Nombre réservations</th>
         </tr>
-        <tr th:each="chambre : ${chambres}">
-            <td th:text="${chambre.numero}"></td>
-            <td th:text="${chambre.nb_personne}"></td>
-            <td th:text="${chambre.prix}"></td>
-            <td th:text="${chambre.disponible} ? 'Oui' : 'Non'"></td>
+        <tr th:each="evenement : ${evenements}">
+            <td th:text="${evenement.nom}"></td>
+            <td th:text="${evenement.date}"></td>
+            <td th:text="${evenement.heure}"></td>
+            <td th:text="${evenement.prix}"></td>
+            <td th:text="${evenement.place_dispo}"></td>
+            <td th:text="${evenement.nb_reserver}"></td>
         </tr>
     </table>
 </body>
