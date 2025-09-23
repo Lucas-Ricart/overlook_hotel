@@ -15,10 +15,10 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/event")
-    public String afficherEvenements(Model model) {
-        List<Event> evenements = eventService.getAllEvents();
-        model.addAttribute("evenements", evenements);
-        return "event"; // Nom du fichier HTML dans templates/
+    @GetMapping("/index")
+    public String showEvents(Model model) {
+        List<Event> events = eventService.getAllEvents();
+        model.addAttribute("events", events);
+        return "index";
     }
 }

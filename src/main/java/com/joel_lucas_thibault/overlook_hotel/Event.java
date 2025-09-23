@@ -15,94 +15,52 @@ public class Event {
     private Long id;
 
     @Column(name = "nom", nullable = false)
-    private String nom;
+    private String name;
 
     @Column(name = "date", nullable = false)
     private String date;
 
     @Column(name = "heure", nullable = false)
-    private String heure;
+    private String time;
 
     @Column(name = "prix", nullable = false)
-    private Double prix;
+    private Double price;
 
     @Column(name = "place_dispo", nullable = false)
-    private Integer place_dispo;
+    private Integer availableSeats;
 
     @Column(name = "nb_reserver", nullable = true)
-    private Integer nb_reserver;
+    private Integer reservations;
 
-    //@Column(name = "id_client_reservation", nullable = false)
-    //private Long id_client_reservation;
+    public Event() {}
 
-    // Constructeurs, getters et setters
-
-    public Event() {
-    }
-
-    public Event(String nom, String date, String heure, Double prix, Integer place_dispo, Integer nb_reserver) {
-        this.nom = nom;
+    public Event(String name, String date, String time, Double price, Integer availableSeats, Integer reservations) {
+        this.name = name;
         this.date = date;
-        this.heure = heure;
-        this.prix = prix;
-        this.place_dispo = place_dispo;
-        this.nb_reserver = nb_reserver;
+        this.time = time;
+        this.price = price;
+        this.availableSeats = availableSeats;
+        this.reservations = reservations;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getNom() {
-        return nom;
-    }
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-    
-    public String getDate() {
-        return date;
-    }
+    public String getTime() { return time; }
+    public void setTime(String time) { this.time = time; }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
 
-    public String getHeure() {
-        return heure;
-    }
+    public Integer getAvailableSeats() { return availableSeats; }
+    public void setAvailableSeats(Integer availableSeats) { this.availableSeats = availableSeats; }
 
-    public void setHeure(String heure) {
-        this.heure = heure;
-    }
-
-    public Double getPrix() {
-        return prix;
-    }
-
-    public void setPrix(Double prix) {
-        this.prix = prix;
-    }
-
-    public Integer getPlace_dispo() {
-        return place_dispo;
-    }
-
-    public void setPlace_dispo(Integer place_dispo) {
-        this.place_dispo = place_dispo;
-    }
-
-    public Integer getNb_reserver() {
-        return nb_reserver;
-    }
-
-    public void setNb_reserver(Integer nb_reserver) {
-        this.nb_reserver = nb_reserver;
-    }
-
+    public Integer getReservations() { return reservations; }
+    public void setReservations(Integer reservations) { this.reservations = reservations; }
 }
