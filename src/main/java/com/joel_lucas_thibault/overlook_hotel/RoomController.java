@@ -15,10 +15,10 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @GetMapping("/rooms")
+    @GetMapping("/comment")
     public String showRooms(Model model) {
         List<Room> rooms = roomService.getAllRooms();
         model.addAttribute("rooms", rooms);
-        return "rooms";
+        return "comment";
     }
 }
