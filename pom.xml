@@ -48,6 +48,11 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+		</dependency>
+
 		<!-- Validation (annotations @NotNull, @Email, etc.) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -100,7 +105,13 @@
 		</dependency>
 
 		<!-- Tests (JUnit, Spring Boot Test, etc.) -->
-		<dependency>
+	
+   <dependency>
+     <groupId>com.github.xujiaji.mk</groupId>
+     <artifactId>security-front</artifactId>
+     <version>1.0.0-beta7</version>
+   </dependency>
+ 	<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
