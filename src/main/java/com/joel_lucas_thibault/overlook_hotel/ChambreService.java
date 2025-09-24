@@ -1,7 +1,7 @@
 package com.joel_lucas_thibault.overlook_hotel;
 
 import java.util.List;
-
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +14,10 @@ public class ChambreService {
     }
 
     public List<Chambre> getAllChambres() {
-        return chambreRepository.findAll();
+        return chambreRepository.findAll(Sort.by("numero"));
+    }
+
+    public List<Chambre> getChambresDisponibles() {
+        return chambreRepository.findByDisponible(true, Sort.by("numero"));
     }
 }
