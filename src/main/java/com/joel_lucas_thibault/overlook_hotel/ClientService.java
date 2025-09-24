@@ -16,4 +16,20 @@ public class ClientService {
     public List<Client> getAllClients() {
         return clientRepository.findAll();
     }
+
+    public Client getClientById(Long id) {
+        return clientRepository.findById(id).orElse(null);
+    }
+
+    public List<Client> getClientByName(String name) {
+        return clientRepository.findByName(name);
+    }
+
+    public Client saveClient(Client client) {
+        return clientRepository.save(client);
+    }
+
+    public void deleteClient(Long id) {
+        clientRepository.deleteById(id);
+    }
 }

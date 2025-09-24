@@ -1,8 +1,11 @@
 package com.joel_lucas_thibault.overlook_hotel;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
+    List<Client> findByName(String name);
 }
 
 //findAll : List<Client> findAll() (recupérer tous les clients);

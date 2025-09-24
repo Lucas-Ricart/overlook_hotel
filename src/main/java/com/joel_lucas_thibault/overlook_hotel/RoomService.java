@@ -16,4 +16,20 @@ public class RoomService {
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
     }
+
+    public Room getRoomById(Long id) {
+        return roomRepository.findById(id).orElse(null);
+    }
+
+    public Room saveRoom(Room room) {
+        return roomRepository.save(room);
+    }
+
+    public void deleteRoom(Long id) {
+        roomRepository.deleteById(id);
+    }
+
+    public List<Room> getRoomsByBeds(Integer beds) {
+        return roomRepository.findByBeds(beds);
+    }
 }
