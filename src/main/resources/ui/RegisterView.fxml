@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.joel_lucas_thibault.overlook_hotel.ui.RegisterController">
+    <children>
+        <Label layoutX="100" layoutY="20" text="Inscription Client" />
+        <TextField fx:id="nomField" layoutX="80" layoutY="60" promptText="Nom" />
+        <TextField fx:id="prenomField" layoutX="80" layoutY="100" promptText="Prénom" />
+        <TextField fx:id="mailField" layoutX="80" layoutY="140" promptText="Email" />
+        <PasswordField fx:id="passwordField" layoutX="80" layoutY="180" promptText="Mot de passe" />
+        <Button layoutX="80" layoutY="220" text="S'inscrire" onAction="#handleRegister" />
+        <Label fx:id="errorLabel" layoutX="80" layoutY="260" textFill="red" />
+        <Hyperlink layoutX="80" layoutY="290" text="Déjà un compte ? Connexion" onAction="#goToLogin" />
+    </children>
+</AnchorPane>

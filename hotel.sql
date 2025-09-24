@@ -486,6 +486,11 @@ ALTER TABLE ONLY public.notification
 
 
 --
+-- Ajout de la colonne 'role' pour la gestion des rôles clients
+ALTER TABLE client ADD COLUMN IF NOT EXISTS role VARCHAR(255) DEFAULT 'CLIENT';
+
+
+--
 -- PostgreSQL database dump complete
 --
 

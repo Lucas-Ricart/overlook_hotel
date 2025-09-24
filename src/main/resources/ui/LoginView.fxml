@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.joel_lucas_thibault.overlook_hotel.ui.LoginController">
+    <Label text="Connexion Overlook Hotel" />
+    <TextField fx:id="usernameField" promptText="Nom d'utilisateur" />
+    <PasswordField fx:id="passwordField" promptText="Mot de passe" />
+    <Button text="Se connecter" onAction="#handleLogin" />
+    <Label fx:id="errorLabel" textFill="red" />
+</VBox>

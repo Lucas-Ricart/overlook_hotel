@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head><title>Inscription - Overlook Hotel</title></head>
+<body>
+    <h2>Inscription Client</h2>
+    <form th:action="@{/register}" th:object="${client}" method="post">
+        <label>Nom d'utilisateur: <input type="text" th:field="*{username}" required/></label><br/>
+        <label>Email: <input type="email" th:field="*{email}" required/></label><br/>
+        <label>Mot de passe: <input type="password" th:field="*{password}" required/></label><br/>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Erreur</span>
+        <button type="submit">S'inscrire</button>
+    </form>
+    <div th:if="${error}" th:text="${error}"></div>
+    <a th:href="@{/login?type=client}">Déjà inscrit ? Login</a>
+</body>
+</html>

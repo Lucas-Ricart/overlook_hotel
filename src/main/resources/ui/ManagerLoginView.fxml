@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.joel_lucas_thibault.overlook_hotel.ui.ManagerLoginController">
+    <children>
+        <Label layoutX="100" layoutY="30" text="Connexion Gestionnaire" />
+        <TextField fx:id="usernameField" layoutX="80" layoutY="70" promptText="Email" />
+        <PasswordField fx:id="passwordField" layoutX="80" layoutY="110" promptText="Mot de passe" />
+        <Button layoutX="80" layoutY="150" text="Se connecter" onAction="#handleLogin" />
+        <Label fx:id="errorLabel" layoutX="80" layoutY="190" textFill="red" />
+    </children>
+</AnchorPane>

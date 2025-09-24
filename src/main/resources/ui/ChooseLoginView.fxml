@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.joel_lucas_thibault.overlook_hotel.ui.ChooseLoginController">
+    <children>
+        <Label layoutX="80" layoutY="30" text="Bienvenue à l'Overlook Hotel" />
+        <Button layoutX="80" layoutY="80" text="Connexion Client" onAction="#goToClientLogin" />
+        <Button layoutX="80" layoutY="130" text="Connexion Gestionnaire" onAction="#goToManagerLogin" />
+    </children>
+</AnchorPane>
