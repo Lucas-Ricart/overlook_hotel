@@ -57,6 +57,23 @@
             <td th:text="${client.fidelityPoints}"></td>
         </tr>
     </table>
+    <h1>Employee List</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>First Name</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Password</th>
+        </tr>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.firstName}"></td>
+            <td th:text="${employee.role}"></td>
+            <td th:text="${employee.email}"></td>
+            <td th:text="${employee.password}"></td>
+        </tr>
+    </table>
 </body>
 
 </html>

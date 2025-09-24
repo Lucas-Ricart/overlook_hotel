@@ -9,14 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class RoomController {
 
+    private final EmployeeService employeeService;
+
     private final RoomService roomService;
     private final EventService eventService;
     private final ClientService clientService;
 
-    public RoomController(RoomService roomService, EventService eventService, ClientService clientService) {
+    public RoomController(RoomService roomService, EventService eventService, ClientService clientService, EmployeeService employeeService) {
         this.roomService = roomService;
         this.eventService = eventService;
         this.clientService = clientService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/data")
@@ -29,6 +32,9 @@ public class RoomController {
 
         List<Client> clients = clientService.getAllClients();
         model.addAttribute("clients", clients);
+
+        List<Employee> employees = employeeService.getAllEmployees();
+        model.addAttribute("employees", employees);
 
         return "data";
     }
