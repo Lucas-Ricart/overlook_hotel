@@ -52,6 +52,7 @@ public class DataController {
  // -- Ajout d'une chambre. difference : le modèle est directement lié à la vue--
     @PostMapping("/rooms/add")
     public String addRoom(@ModelAttribute Room room) {
+        room.setAvailable(true);
         roomService.saveRoom(room);
         return "redirect:/data";
     }
