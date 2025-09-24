@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Room List</title>
+</head>
+
+<body>
+    <h1>Room List</h1>
+    <table border="1">
+        <tr>
+            <th>Number</th>
+            <th>Beds</th>
+            <th>Price</th>
+            <th>Available</th>
+        </tr>
+        <tr th:each="room : ${rooms}">
+            <td th:text="${room.number}"></td>
+            <td th:text="${room.beds}"></td>
+            <td th:text="${room.price}"></td>
+            <td th:text="${room.available} ? 'Yes' : 'No'"></td>
+        </tr>
+    </table>
+    <h1>Event List</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Price</th>
+            <th>Available Seats</th>
+            <th>Reservations</th>
+        </tr>
+        <tr th:each="event : ${events}">
+            <td th:text="${event.name}"></td>
+            <td th:text="${event.date}"></td>
+            <td th:text="${event.time}"></td>
+            <td th:text="${event.price}"></td>
+            <td th:text="${event.availableSeats}"></td>
+            <td th:text="${event.reservations}"></td>
+        </tr>
+    </table>
+    <h1>Client List</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>First Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Fidelity Points</th>
+        </tr>
+        <tr th:each="client : ${clients}">
+            <td th:text="${client.name}"></td>
+            <td th:text="${client.firstName}"></td>
+            <td th:text="${client.email}"></td>
+            <td th:text="${client.password}"></td>
+            <td th:text="${client.fidelityPoints}"></td>
+        </tr>
+    </table>
+</body>
+
+</html>
