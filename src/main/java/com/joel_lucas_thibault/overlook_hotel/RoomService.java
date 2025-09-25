@@ -1,6 +1,8 @@
 package com.joel_lucas_thibault.overlook_hotel;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,6 @@ public class RoomService {
 
     public RoomService(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
-    }
-
-    public List<Room> getAllRooms() {
-        return roomRepository.findAll();
     }
 
     public Room getRoomById(Long id) {
@@ -31,5 +29,11 @@ public class RoomService {
 
     public List<Room> getRoomsByBeds(Integer beds) {
         return roomRepository.findByBeds(beds);
+    }
+
+    public List<Room> getAllRooms() { //ranger dans l'ordre croissant une base de donnée
+        return roomRepository.findAll().stream()
+                .sorted(Comparator.comparing(Room::getNumber))
+                .collect(Collectors.toList());
     }
 }
