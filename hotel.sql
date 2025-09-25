@@ -94,28 +94,6 @@ CREATE TABLE public.event (
 ALTER TABLE public.event OWNER TO postgres;
 
 --
--- Name: evenement_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.evenement_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.evenement_id_seq OWNER TO postgres;
-
---
--- Name: evenement_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.evenement_id_seq OWNED BY public.event.id;
-
-
---
 -- Name: notification; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -231,13 +209,6 @@ ALTER TABLE ONLY public.evaluation ALTER COLUMN id SET DEFAULT nextval('public.e
 
 
 --
--- Name: event id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.event ALTER COLUMN id SET DEFAULT nextval('public.evenement_id_seq'::regclass);
-
-
---
 -- Name: notification id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -307,13 +278,6 @@ COPY public.room (id, number, price, capacity, available, id_user_reservation, s
 --
 
 SELECT pg_catalog.setval('public.evaluation_id_seq', 1, false);
-
-
---
--- Name: evenement_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.evenement_id_seq', 1, false);
 
 
 --
