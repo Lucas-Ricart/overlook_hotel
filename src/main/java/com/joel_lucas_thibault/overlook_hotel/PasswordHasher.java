@@ -6,6 +6,6 @@ public class PasswordHasher {
     public static void main(String[] args) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println("Mot de passe client : " + encoder.encode("12345"));
-        System.out.println("Mot de passe employé : " + encoder.encode("azerty"));
+        System.out.println("Mot de passe employé : " + encoder.encode("qzerty"));
     }
 }

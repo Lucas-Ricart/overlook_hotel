@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login Employé</title>
-    <meta charset="UTF-8">
+    <title>Login Employee</title>
 </head>
 <body>
-    <h2>Connexion Employé</h2>
-    <p>Formulaire à venir…</p>
-    <a th:href="@{/}">⬅ Retour</a>
+    <h1>Login Employee</h1>
+    <form th:action="@{/login-employee}" method="post">
+        <label>Email :</label>
+        <input type="text" name="username" required />
+        <br>
+        <label>Password :</label>
+        <input type="password" name="password" required />
+        <br>
+        <button type="submit">Login</button>
+    </form>
+
+    <p><a th:href="@{/}">← Back</a></p>
 </body>
 </html>

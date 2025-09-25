@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.5
--- Dumped by pg_dump version 17.5
+-- Dumped from database version 17.4
+-- Dumped by pg_dump version 17.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -22,120 +22,21 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: chambre; Type: TABLE; Schema: public; Owner: postgres
+-- Name: app_user; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.chambre (
+CREATE TABLE public.app_user (
     id integer NOT NULL,
-    numero integer NOT NULL,
-    prix integer NOT NULL,
-    nb_personne integer NOT NULL,
-    disponible boolean DEFAULT true,
-    id_client_reservation integer
-);
-
-
-ALTER TABLE public.chambre OWNER TO postgres;
-
---
--- Name: chambre_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.chambre_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.chambre_id_seq OWNER TO postgres;
-
---
--- Name: chambre_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.chambre_id_seq OWNED BY public.chambre.id;
-
-
---
--- Name: client; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.client (
-    id integer NOT NULL,
-    nom character varying(255) NOT NULL,
-    prenom character varying(255) NOT NULL,
+    last_name character varying(255) NOT NULL,
+    first_name character varying(255) NOT NULL,
     mail character varying(255) NOT NULL,
-    motdepasse character varying(255) NOT NULL,
-    point_fidelite integer NOT NULL,
-    salt character varying(255)
+    password character varying(255) NOT NULL,
+    role character varying(50) NOT NULL,
+    loyalty_points integer DEFAULT 0
 );
 
 
-ALTER TABLE public.client OWNER TO postgres;
-
---
--- Name: client_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.client_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.client_id_seq OWNER TO postgres;
-
---
--- Name: client_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.client_id_seq OWNED BY public.client.id;
-
-
---
--- Name: employer; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.employer (
-    id integer NOT NULL,
-    nom character varying(255) NOT NULL,
-    prenom character varying(255) NOT NULL,
-    role character varying(255) NOT NULL,
-    mail character varying(255) NOT NULL,
-    motdepasse character varying(255) NOT NULL,
-    salt character varying(255)
-);
-
-
-ALTER TABLE public.employer OWNER TO postgres;
-
---
--- Name: employer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.employer_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.employer_id_seq OWNER TO postgres;
-
---
--- Name: employer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.employer_id_seq OWNED BY public.employer.id;
-
+ALTER TABLE public.app_user OWNER TO postgres;
 
 --
 -- Name: evaluation; Type: TABLE; Schema: public; Owner: postgres
@@ -143,11 +44,11 @@ ALTER SEQUENCE public.employer_id_seq OWNED BY public.employer.id;
 
 CREATE TABLE public.evaluation (
     id integer NOT NULL,
-    id_client integer NOT NULL,
-    note integer NOT NULL,
-    commentaire text,
+    id_user integer NOT NULL,
+    score integer NOT NULL,
+    comment text,
     date date NOT NULL,
-    heure time without time zone NOT NULL
+    "time" time without time zone NOT NULL
 );
 
 
@@ -176,21 +77,21 @@ ALTER SEQUENCE public.evaluation_id_seq OWNED BY public.evaluation.id;
 
 
 --
--- Name: evenement; Type: TABLE; Schema: public; Owner: postgres
+-- Name: event; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.evenement (
+CREATE TABLE public.event (
     id integer NOT NULL,
-    nom character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
     date date NOT NULL,
-    heure time without time zone NOT NULL,
-    prix integer NOT NULL,
-    place_dispo integer NOT NULL,
-    nb_reserver integer NOT NULL
+    "time" time without time zone NOT NULL,
+    price integer NOT NULL,
+    available_slots integer NOT NULL,
+    booked_slots integer NOT NULL
 );
 
 
-ALTER TABLE public.evenement OWNER TO postgres;
+ALTER TABLE public.event OWNER TO postgres;
 
 --
 -- Name: evenement_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -211,7 +112,7 @@ ALTER SEQUENCE public.evenement_id_seq OWNER TO postgres;
 -- Name: evenement_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.evenement_id_seq OWNED BY public.evenement.id;
+ALTER SEQUENCE public.evenement_id_seq OWNED BY public.event.id;
 
 
 --
@@ -220,13 +121,12 @@ ALTER SEQUENCE public.evenement_id_seq OWNED BY public.evenement.id;
 
 CREATE TABLE public.notification (
     id integer NOT NULL,
-    id_client integer,
-    id_evenement integer,
-    id_employer integer,
-    titre character varying(255) NOT NULL,
+    id_user integer,
+    id_event integer,
+    title character varying(255) NOT NULL,
     description text,
     date date,
-    heure time without time zone
+    "time" time without time zone
 );
 
 
@@ -255,24 +155,72 @@ ALTER SEQUENCE public.notification_id_seq OWNED BY public.notification.id;
 
 
 --
--- Name: chambre id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: room; Type: TABLE; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.chambre ALTER COLUMN id SET DEFAULT nextval('public.chambre_id_seq'::regclass);
+CREATE TABLE public.room (
+    id integer NOT NULL,
+    number character varying(255) NOT NULL,
+    price double precision NOT NULL,
+    capacity integer NOT NULL,
+    available boolean DEFAULT true,
+    id_user_reservation integer,
+    start_date date,
+    end_date date
+);
+
+
+ALTER TABLE public.room OWNER TO postgres;
+
+--
+-- Name: room_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.room_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.room_id_seq OWNER TO postgres;
+
+--
+-- Name: room_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.room_id_seq OWNED BY public.room.id;
 
 
 --
--- Name: client id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.client ALTER COLUMN id SET DEFAULT nextval('public.client_id_seq'::regclass);
+CREATE SEQUENCE public.user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.user_id_seq OWNER TO postgres;
+
+--
+-- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.user_id_seq OWNED BY public.app_user.id;
 
 
 --
--- Name: employer id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: app_user id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.employer ALTER COLUMN id SET DEFAULT nextval('public.employer_id_seq'::regclass);
+ALTER TABLE ONLY public.app_user ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
 
 
 --
@@ -283,10 +231,10 @@ ALTER TABLE ONLY public.evaluation ALTER COLUMN id SET DEFAULT nextval('public.e
 
 
 --
--- Name: evenement id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: event id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.evenement ALTER COLUMN id SET DEFAULT nextval('public.evenement_id_seq'::regclass);
+ALTER TABLE ONLY public.event ALTER COLUMN id SET DEFAULT nextval('public.evenement_id_seq'::regclass);
 
 
 --
@@ -297,35 +245,22 @@ ALTER TABLE ONLY public.notification ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- Data for Name: chambre; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Name: room id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-COPY public.chambre (id, numero, prix, nb_personne, disponible, id_client_reservation) FROM stdin;
-1	100	55	1	t	\N
-2	110	60	1	t	\N
-3	120	60	2	t	\N
-4	200	80	4	t	\N
-\.
+ALTER TABLE ONLY public.room ALTER COLUMN id SET DEFAULT nextval('public.room_id_seq'::regclass);
 
 
 --
--- Data for Name: client; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: app_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.client (id, nom, prenom, mail, motdepasse, point_fidelite, salt) FROM stdin;
-1	Lennon	Bob	pyrobarbare@gmail.com	12345	0	ITSSALT555
-2	Emilio	Emile	emilEmilio@gmail.com	12345	0	ITSSALT555
-3	Carel	Rebeka	Rebekarel@hotmail.fr	12345	0	ITSSALT555
-\.
-
-
---
--- Data for Name: employer; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.employer (id, nom, prenom, role, mail, motdepasse, salt) FROM stdin;
-1	Dupon	Dupont	admin	Dupon.dupont@hotmail.fr	azerty	ITSverySALT555
-2	Jean	Montcuq	employer	montcuq.bestville@gmail.com	qwerty	ITSverySALT555
+COPY public.app_user (id, last_name, first_name, mail, password, role, loyalty_points) FROM stdin;
+1	Lennon	Bob	pyrobarbare@gmail.com	12345	client	0
+2	Emilio	Emile	emilEmilio@gmail.com	12345	client	0
+3	Carel	Rebeka	Rebekarel@hotmail.fr	12345	client	0
+4	Dupon	Dupont	Dupon.dupont@hotmail.fr	azerty	employee	0
+5	Jean	Montcuq	montcuq.bestville@gmail.com	$2a$10$z06lZoHwTd1RqXvs61HqFe01MveKw0CnvlNBLA7jgzhiw0GZQR8bu	manager	0
 \.
 
 
@@ -333,15 +268,15 @@ COPY public.employer (id, nom, prenom, role, mail, motdepasse, salt) FROM stdin;
 -- Data for Name: evaluation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.evaluation (id, id_client, note, commentaire, date, heure) FROM stdin;
+COPY public.evaluation (id, id_user, score, comment, date, "time") FROM stdin;
 \.
 
 
 --
--- Data for Name: evenement; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: event; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.evenement (id, nom, date, heure, prix, place_dispo, nb_reserver) FROM stdin;
+COPY public.event (id, name, date, "time", price, available_slots, booked_slots) FROM stdin;
 1	Concert	2025-12-24	18:00:00	15	50	0
 2	atelier poterie	2025-12-20	13:30:00	0	20	0
 \.
@@ -351,29 +286,20 @@ COPY public.evenement (id, nom, date, heure, prix, place_dispo, nb_reserver) FRO
 -- Data for Name: notification; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.notification (id, id_client, id_evenement, id_employer, titre, description, date, heure) FROM stdin;
+COPY public.notification (id, id_user, id_event, title, description, date, "time") FROM stdin;
 \.
 
 
 --
--- Name: chambre_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Data for Name: room; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.chambre_id_seq', 4, true);
-
-
---
--- Name: client_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.client_id_seq', 3, true);
-
-
---
--- Name: employer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.employer_id_seq', 2, true);
+COPY public.room (id, number, price, capacity, available, id_user_reservation, start_date, end_date) FROM stdin;
+2	110	60	1	t	\N	\N	\N
+3	120	60	2	t	\N	\N	\N
+4	200	80	4	t	\N	\N	\N
+1	100	55	1	f	1	2025-09-25	2025-09-30
+\.
 
 
 --
@@ -387,7 +313,7 @@ SELECT pg_catalog.setval('public.evaluation_id_seq', 1, false);
 -- Name: evenement_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.evenement_id_seq', 2, true);
+SELECT pg_catalog.setval('public.evenement_id_seq', 1, false);
 
 
 --
@@ -398,27 +324,17 @@ SELECT pg_catalog.setval('public.notification_id_seq', 1, false);
 
 
 --
--- Name: chambre chambre_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: room_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.chambre
-    ADD CONSTRAINT chambre_pkey PRIMARY KEY (id);
-
-
---
--- Name: client client_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.client
-    ADD CONSTRAINT client_pkey PRIMARY KEY (id);
+SELECT pg_catalog.setval('public.room_id_seq', 1, false);
 
 
 --
--- Name: employer employer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.employer
-    ADD CONSTRAINT employer_pkey PRIMARY KEY (id);
+SELECT pg_catalog.setval('public.user_id_seq', 5, true);
 
 
 --
@@ -430,10 +346,10 @@ ALTER TABLE ONLY public.evaluation
 
 
 --
--- Name: evenement evenement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: event evenement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.evenement
+ALTER TABLE ONLY public.event
     ADD CONSTRAINT evenement_pkey PRIMARY KEY (id);
 
 
@@ -446,43 +362,59 @@ ALTER TABLE ONLY public.notification
 
 
 --
--- Name: chambre fk_chambre_client; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: room room_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.chambre
-    ADD CONSTRAINT fk_chambre_client FOREIGN KEY (id_client_reservation) REFERENCES public.client(id);
+ALTER TABLE ONLY public.room
+    ADD CONSTRAINT room_pkey PRIMARY KEY (id);
 
 
 --
--- Name: evaluation fk_evaluation_client; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: app_user user_mail_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.app_user
+    ADD CONSTRAINT user_mail_key UNIQUE (mail);
+
+
+--
+-- Name: app_user user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.app_user
+    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: evaluation fk_evaluation_app_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.evaluation
-    ADD CONSTRAINT fk_evaluation_client FOREIGN KEY (id_client) REFERENCES public.client(id);
+    ADD CONSTRAINT fk_evaluation_app_user FOREIGN KEY (id_user) REFERENCES public.app_user(id) ON DELETE CASCADE;
 
 
 --
--- Name: notification fk_notification_client; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.notification
-    ADD CONSTRAINT fk_notification_client FOREIGN KEY (id_client) REFERENCES public.client(id);
-
-
---
--- Name: notification fk_notification_employer; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification fk_notification_app_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.notification
-    ADD CONSTRAINT fk_notification_employer FOREIGN KEY (id_employer) REFERENCES public.employer(id);
+    ADD CONSTRAINT fk_notification_app_user FOREIGN KEY (id_user) REFERENCES public.app_user(id) ON DELETE SET NULL;
 
 
 --
--- Name: notification fk_notification_evenement; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification fk_notification_event; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.notification
-    ADD CONSTRAINT fk_notification_evenement FOREIGN KEY (id_evenement) REFERENCES public.evenement(id);
+    ADD CONSTRAINT fk_notification_event FOREIGN KEY (id_event) REFERENCES public.event(id) ON DELETE SET NULL;
+
+
+--
+-- Name: room fk_room_app_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.room
+    ADD CONSTRAINT fk_room_app_user FOREIGN KEY (id_user_reservation) REFERENCES public.app_user(id) ON DELETE SET NULL;
 
 
 --
