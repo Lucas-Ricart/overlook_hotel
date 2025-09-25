@@ -57,8 +57,8 @@
             <td th:text="${event.availableSeats}"></td>
             <td th:text="${event.reservations}"></td>
             <td>
-                <a th:href="@{'/event/edit/' + ${event.id}}"><button>Modifier</button></a>
-                <form th:action="@{'/event/delete/' + ${event.id}}" method="post" style="display:inline;">
+                <a th:href="@{'/events/edit/' + ${event.id}}"><button>Modifier</button></a>
+                <form th:action="@{'/events/delete/' + ${event.id}}" method="post" style="display:inline;">
                     <button type="submit" onclick="return confirm('Supprimer cet événement ?')">Supprimer</button>
                 </form>
             </td>
@@ -86,8 +86,8 @@
             <td th:text="${client.password}"></td>
             <td th:text="${client.fidelityPoints}"></td>
             <td>
-                <a th:href="@{'/client/edit/' + ${client.id}}"><button>Modifier</button></a>
-                <form th:action="@{'/client/delete/' + ${client.id}}" method="post" style="display:inline;">
+                <a th:href="@{'/clients/edit/' + ${client.id}}"><button>Modifier</button></a>
+                <form th:action="@{'/clients/delete/' + ${client.id}}" method="post" style="display:inline;">
                     <button type="submit" onclick="return confirm('Supprimer ce client ?')">Supprimer</button>
                 </form>
             </td>
@@ -115,8 +115,8 @@
             <td th:text="${employee.email}"></td>
             <td th:text="${employee.password}"></td>
             <td>
-                <a th:href="@{'/employee/edit/' + ${employee.id}}"><button>Modifier</button></a>
-                <form th:action="@{'/employee/delete/' + ${employee.id}}" method="post" style="display:inline;">
+                <a th:href="@{'/employees/edit/' + ${employee.id}}"><button>Modifier</button></a>
+                <form th:action="@{'/employees/delete/' + ${employee.id}}" method="post" style="display:inline;">
                     <button type="submit" onclick="return confirm('Supprimer cet employé ?')">Supprimer</button>
                 </form>
             </td>

@@ -102,6 +102,7 @@ public class DataController {
 
     @PostMapping("/events/add")
     public String addEvent(@ModelAttribute Event event) {
+        event.setReservations(0);
         eventService.saveEvent(event);
         return "redirect:/data";
     }
@@ -116,8 +117,20 @@ public class DataController {
 
     @PostMapping("/events/edit/{id}")
     public String editEvent(@PathVariable Long id, @ModelAttribute Event event) {
-        event.setId(id);
-        eventService.saveEvent(event);
+        Event existingEvent = eventService.getEventById(id);
+
+        //Modification des champs de l'événement existant sans erreur avec le nombre de reservations
+        if (existingEvent == null) {
+            return "redirect:/error"; 
+        }
+
+        existingEvent.setName(event.getName());
+        existingEvent.setDate(event.getDate());
+        existingEvent.setTime(event.getTime());
+        existingEvent.setAvailableSeats(event.getAvailableSeats());
+        existingEvent.setPrice(event.getPrice());
+
+        eventService.saveEvent(existingEvent);
         return "redirect:/data";
     }
 

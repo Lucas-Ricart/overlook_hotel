@@ -1,6 +1,8 @@
 package com.joel_lucas_thibault.overlook_hotel;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,9 @@ public class EventService {
     }
 
     public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+        return eventRepository.findAll().stream()
+                .sorted(Comparator.comparing(Event::getId))
+                .collect(Collectors.toList());
     }
 
     public Event getEventById(Long id) {
