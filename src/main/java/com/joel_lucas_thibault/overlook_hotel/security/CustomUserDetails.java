@@ -1,39 +1,38 @@
 package com.joel_lucas_thibault.overlook_hotel.security;
 
-import org.springframework.security.core.userdetails.UserDetails;
+import com.joel_lucas_thibault.overlook_hotel.model.AppUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import com.joel_lucas_thibault.overlook_hotel.model.Employee;
-
+import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
-    private final Employee employee;
+    private final AppUser user;
 
-    public CustomUserDetails(Employee employee) {
-        this.employee = employee;
-    }
+    public CustomUserDetails(AppUser user) { this.user = user; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + employee.getRole().toUpperCase()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
     @Override
-    public String getPassword() {
-        return employee.getMotdepasse();
-    }
+    public String getPassword() { return user.getPassword(); }
 
     @Override
-    public String getUsername() {
-        return employee.getMail();
-    }
+    public String getUsername() { return user.getMail(); }
 
-    @Override public boolean isAccountNonExpired() { return true; }
-    @Override public boolean isAccountNonLocked() { return true; }
-    @Override public boolean isCredentialsNonExpired() { return true; }
-    @Override public boolean isEnabled() { return true; }
+    @Override
+    public boolean isAccountNonExpired() { return true; }
+    @Override
+    public boolean isAccountNonLocked() { return true; }
+    @Override
+    public boolean isCredentialsNonExpired() { return true; }
+    @Override
+    public boolean isEnabled() { return true; }
+
+    public String getFirstName() { return user.getFirstName(); }
+    public String getLastName() { return user.getLastName(); }
 }

@@ -1,25 +1,25 @@
 package com.joel_lucas_thibault.overlook_hotel.security;
 
+import com.joel_lucas_thibault.overlook_hotel.model.AppUser;
+import com.joel_lucas_thibault.overlook_hotel.repository.AppUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.joel_lucas_thibault.overlook_hotel.repository.EmployeeRepository;
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final EmployeeRepository employeeRepository;
+    private final AppUserRepository repo;
 
-    public CustomUserDetailsService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public CustomUserDetailsService(AppUserRepository repo) {
+        this.repo = repo;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var employee = employeeRepository.findByMail(username)
-            .orElseThrow(() -> new UsernameNotFoundException("Utilisateur introuvable"));
-        return new CustomUserDetails(employee);
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        AppUser user = repo.findByMail(mail)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return new CustomUserDetails(user);
     }
 }
