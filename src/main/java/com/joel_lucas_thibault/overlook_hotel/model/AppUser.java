@@ -26,7 +26,7 @@ public class AppUser {
     private String password;
 
     @Column(name="role", nullable=false)
-    private String role;   // ex: "CLIENT" ou "EMPLOYEE"
+    private String role;
 
     @Column(name="loyalty_points")
     private Integer loyaltyPoints = 0;
