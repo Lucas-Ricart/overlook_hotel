@@ -6,11 +6,10 @@ import org.springframework.data.domain.Sort;
 
 public interface ChambreRepository extends JpaRepository<Chambre, Long> {
     List<Chambre> findByDisponible(Boolean disponible, Sort sort);
-}
 
-//findAll : List<Chambre> findAll() (recupérer toutes les chambres);
-//findById : Optional<Chambre> findById(Long id) (recupérer une chambre par son id);
-//save : Chambre save(Chambre chambre) (ajouter ou mettre à jour une chambre);
-//deleteById : void deleteById(Long id) (supprimer une chambre par son id);
-//findByDisponible : List<Chambre> findByDisponible(Boolean disponible) (recupérer les chambres disponibles ou non);
-//findByNbPersonne : List<Chambre> findByNbPersonne(Integer nbPersonne) (recupérer les chambres en fonction du nombre de personnes qu'elles peuvent accueillir).
+    // Récupère toutes les chambres réservées (id_client_reservation n'est pas NULL)
+    List<Chambre> findById_client_reservationIsNotNull(Sort sort);
+
+    // Récupère les chambres réservées par un client spécifique
+    List<Chambre> findById_client_reservation(Long idClient, Sort sort);
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mes Réservations</title>
+</head>
+<body>
+    <h1>Mes Réservations</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Numéro de chambre</th>
+                <th>Prix</th>
+                <th>Nombre de personnes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reservation : ${reservations}">
+                <td th:text="${reservation.numero}"></td>
+                <td th:text="${reservation.prix}"></td>
+                <td th:text="${reservation.nb_personne}"></td>
+                <td>
+                    <form th:action="@{/api/reservations/annuler/{idChambre}(idChambre=${reservation.id})}" method="post">
+                        <button type="submit">Annuler</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,14 +1,11 @@
 package com.joel_lucas_thibault.overlook_hotel;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "chambre")
+@Data
 public class Chambre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +22,9 @@ public class Chambre {
 
     @Column(name = "disponible", nullable = false)
     private Boolean disponible;
-    
-    //@Column(name = "id_client_reservation", nullable = false)
-    //private Long id_client_reservation;
+
+    @Column(name = "id_client_reservation")
+    private Long id_client_reservation;
 
     // Constructeurs, getters et setters
 
@@ -38,6 +35,7 @@ public class Chambre {
         this.numero = numero;
         this.nb_personne = nb_personne;
         this.prix = prix;
+        this.disponible = true; // Par défaut, une chambre est disponible
     }
 
     public Long getId() {
@@ -80,4 +78,11 @@ public class Chambre {
         this.disponible = disponible;
     }
 
+    public Long getId_client_reservation() {
+        return id_client_reservation;
+    }
+
+    public void setId_client_reservation(Long id_client_reservation) {
+        this.id_client_reservation = id_client_reservation;
+    }
 }

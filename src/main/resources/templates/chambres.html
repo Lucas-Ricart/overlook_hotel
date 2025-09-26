@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Liste des chambres</title>
+    <title>Chambres</title>
 </head>
-
 <body>
-    
-    <h1>Liste des chambres</h1>
-    <form th:action="@{/chambres}" method="get">
-        <label>
-            <input type="checkbox" name="disponible" value="true"
-                th:checked="${filtreDisponible}"
-                onchange="this.form.submit()"> 
-            Chambres disponibles uniquement
-        </label>            
-    </form>
-    <table border="1">
-        <tr>
-            <th>Numéro</th>
-            <th>lit(s)</th>
-            <th>Prix</th>
-            <th>Disponible</th>
-        </tr>
-        <tr th:each="chambre : ${chambres}">
-            <td th:text="${chambre.numero}"></td>
-            <td th:text="${chambre.nb_personne}"></td>
-            <td th:text="${chambre.prix}"></td>
-            <td th:text="${chambre.disponible} ? 'Oui' : 'Non'"></td>
-        </tr>
+    <h1>Chambres</h1>
+    <a th:href="@{/chambres(disponible=true)}">Voir seulement les chambres disponibles</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Numéro</th>
+                <th>Prix</th>
+                <th>Nombre de personnes</th>
+                <th>Disponible</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="chambre : ${chambres}">
+                <td th:text="${chambre.numero}"></td>
+                <td th:text="${chambre.prix}"></td>
+                <td th:text="${chambre.nb_personne}"></td>
+                <td th:text="${chambre.disponible ? 'Oui' : 'Non'}"></td>
+                <td>
+                    <form th:if="${chambre.disponible}" th:action="@{/api/reservations/creer/{idChambre}/{idClient}(idChambre=${chambre.id},idClient=1)}" method="post">
+                        <button type="submit">Réserver</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
     </table>
 </body>
-
 </html>
