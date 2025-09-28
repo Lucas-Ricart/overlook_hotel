@@ -9,20 +9,20 @@
     <h1>Room List</h1>
     <a href="/rooms/add"><button>Ajouter une chambre</button></a>
     <form method="get" action="/rooms/filter" style="display:inline;">
-        <input type="text" name="beds" placeholder="Filtrer par lits">
+        <input type="text" name="capacity" placeholder="Filtrer par capacité">
         <button type="submit">Filtrer</button>
     </form>
     <table border="1">
         <tr>
             <th>Number</th>
-            <th>Beds</th>
+            <th>capacity</th>
             <th>Price</th>
             <th>Available</th>
             <th>Actions</th>
         </tr>
         <tr th:each="room : ${rooms}">
             <td th:text="${room.number}"></td>
-            <td th:text="${room.beds}"></td>
+            <td th:text="${room.capacity}"></td>
             <td th:text="${room.price}"></td>
             <td th:text="${room.available} ? 'Yes' : 'No'"></td>
             <td>
@@ -46,7 +46,7 @@
             <th>Time</th>
             <th>Price</th>
             <th>Available Seats</th>
-            <th>Reservations</th>
+            <th>booked_slots</th>
             <th>Actions</th>
         </tr>
         <tr th:each="event : ${events}">
@@ -54,8 +54,8 @@
             <td th:text="${event.date}"></td>
             <td th:text="${event.time}"></td>
             <td th:text="${event.price}"></td>
-            <td th:text="${event.availableSeats}"></td>
-            <td th:text="${event.reservations}"></td>
+            <td th:text="${event.availableSlots}"></td>
+            <td th:text="${event.booked_Slots}"></td>
             <td>
                 <a th:href="@{'/events/edit/' + ${event.id}}"><button>Modifier</button></a>
                 <form th:action="@{'/events/delete/' + ${event.id}}" method="post" style="display:inline;">
@@ -109,7 +109,7 @@
             <th>Actions</th>
         </tr>
         <tr th:each="employee : ${employees}">
-            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.lastName}"></td>
             <td th:text="${employee.firstName}"></td>
             <td th:text="${employee.role}"></td>
             <td th:text="${employee.email}"></td>

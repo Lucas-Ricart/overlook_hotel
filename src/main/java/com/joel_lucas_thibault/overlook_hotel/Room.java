@@ -8,29 +8,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "chambre")
+@Table(name = "room")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "numero", nullable = false)
+    @Column(name = "number", nullable = false)
     private String number;
 
-    @Column(name = "nb_personne", nullable = false)
-    private Integer beds;
+    @Column(name = "capacity", nullable = false)
+    private Integer capacity;
 
-    @Column(name = "prix", nullable = false)
+    @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "disponible", nullable = false)
+    @Column(name = "available", nullable = false)
     private Boolean available;
 
     public Room() {}
 
-    public Room(String number, Integer beds, Double price, Boolean available) {
+    public Room(String number, Integer capacity, Double price, Boolean available) {
         this.number = number;
-        this.beds = beds;
+        this.capacity = capacity;
         this.price = price;
         this.available = available;
     }
@@ -41,8 +41,8 @@ public class Room {
     public String getNumber() { return number; }
     public void setNumber(String number) { this.number = number; }
 
-    public Integer getBeds() { return beds; }
-    public void setBeds(Integer beds) { this.beds = beds; }
+    public Integer getCapacity() { return capacity; }
+    public void setCapacity(Integer capacity) { this.capacity = capacity; }
 
     public Double getPrice() { return price; }
     public void setPrice(Double price) { this.price = price; }

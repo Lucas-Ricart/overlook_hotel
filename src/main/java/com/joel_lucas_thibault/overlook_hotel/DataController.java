@@ -17,9 +17,9 @@ public class DataController {
 
     private final RoomService roomService;
     private final EventService eventService;
-    private final ClientService clientService;
+    private final UsersService clientService;
 
-    public DataController(RoomService roomService, EventService eventService, ClientService clientService, EmployeeService employeeService) {
+    public DataController(RoomService roomService, EventService eventService, UsersService clientService, EmployeeService employeeService) {
         this.roomService = roomService;
         this.eventService = eventService;
         this.clientService = clientService;
@@ -34,10 +34,10 @@ public class DataController {
         List<Event> events = eventService.getAllEvents();
         model.addAttribute("events", events);
 
-        List<Client> clients = clientService.getAllClients();
-        model.addAttribute("clients", clients);
+        List<Users> users = clientService.getAllClients();
+        model.addAttribute("users", users);
 
-        List<Employee> employees = employeeService.getAllEmployees();
+        List<Users> employees = employeeService.getAllEmployees();
         model.addAttribute("employees", employees);
 
         return "data";
@@ -81,13 +81,13 @@ public class DataController {
 
     // --- FILTRE ---
     @GetMapping("/rooms/filter")
-    public String filterRooms(@RequestParam(required = false) Integer beds, Model model) {
-        List<Room> rooms = (beds == null) ? roomService.getAllRooms() : roomService.getRoomsByBeds(beds);
+    public String filterRooms(@RequestParam(required = false) Integer capacity, Model model) {
+        List<Room> rooms = (capacity == null) ? roomService.getAllRooms() : roomService.getRoomsByCapacity(capacity);
         model.addAttribute("rooms", rooms);
 
         // Ajoute aussi les autres listes pour la page data.html
         model.addAttribute("events", eventService.getAllEvents());
-        model.addAttribute("clients", clientService.getAllClients());
+        model.addAttribute("users", clientService.getAllClients());
         model.addAttribute("employees", employeeService.getAllEmployees());
         return "data";
     }
@@ -102,7 +102,7 @@ public class DataController {
 
     @PostMapping("/events/add")
     public String addEvent(@ModelAttribute Event event) {
-        event.setReservations(0);
+        event.setBooked_Slots(0);
         eventService.saveEvent(event);
         return "redirect:/data";
     }
@@ -119,15 +119,15 @@ public class DataController {
     public String editEvent(@PathVariable Long id, @ModelAttribute Event event) {
         Event existingEvent = eventService.getEventById(id);
 
-        //Modification des champs de l'événement existant sans erreur avec le nombre de reservations
+        //Modification des champs de l'événement existant sans erreur avec le nombre de réservations
         if (existingEvent == null) {
-            return "redirect:/error"; 
+            return "redirect:/error";
         }
 
         existingEvent.setName(event.getName());
         existingEvent.setDate(event.getDate());
         existingEvent.setTime(event.getTime());
-        existingEvent.setAvailableSeats(event.getAvailableSeats());
+        existingEvent.setAvailableSlots(event.getAvailableSlots());
         existingEvent.setPrice(event.getPrice());
 
         eventService.saveEvent(existingEvent);
@@ -158,42 +158,42 @@ public class DataController {
     // --- AJOUT ---
     @GetMapping("/clients/add")
     public String showAddClientForm(Model model) {
-        model.addAttribute("client", new Client());
+        model.addAttribute("client", new Users());
         return "add_client";
     }
 
     @PostMapping("/clients/add")
-    public String addClient(@ModelAttribute Client client) {
-        clientService.saveClient(client);
+    public String addClient(@ModelAttribute Users client) {
+        clientService.saveUser(client);
         return "redirect:/data";
     }
 
     // --- MODIFICATION ---
     @GetMapping("/clients/edit/{id}")
     public String showEditClientForm(@PathVariable Long id, Model model) {
-        Client client = clientService.getClientById(id);
+        Users client = clientService.getUserById(id);
         model.addAttribute("client", client);
         return "edit_client";
     }
 
     @PostMapping("/clients/edit/{id}")
-    public String editClient(@PathVariable Long id, @ModelAttribute Client client) {
+    public String editClient(@PathVariable Long id, @ModelAttribute Users client) {
         client.setId(id);
-        clientService.saveClient(client);
+        clientService.saveUser(client);
         return "redirect:/data";
     }
 
     // --- SUPPRESSION ---
     @PostMapping("/clients/delete/{id}")
     public String deleteClient(@PathVariable Long id) {
-        clientService.deleteClient(id);
+        clientService.deleteUser(id);
         return "redirect:/data";
     }
 
     // ---FILTRE ---
     @GetMapping("/clients/filter")
     public String filterClients(@RequestParam(required = false) String name, Model model) {
-        List<Client> clients = (name == null) ? clientService.getAllClients() : clientService.getClientByName(name);
+        List<Users> clients = (name == null) ? clientService.getAllClients() : clientService.getUserByLastName(name);
         model.addAttribute("clients", clients);
 
         // Ajoute aussi les autres listes pour la page data.html
@@ -207,12 +207,12 @@ public class DataController {
     // --- AJOUT ---
     @GetMapping("/employees/add")
     public String showAddEmployeeForm(Model model) {
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employee", new Users());
         return "add_employee";
     }
 
     @PostMapping("/employees/add")
-    public String addEmployee(@ModelAttribute Employee employee) {
+    public String addEmployee(@ModelAttribute Users employee) {
         employeeService.saveEmployee(employee);
         return "redirect:/data";
     }
@@ -220,13 +220,13 @@ public class DataController {
     // --- MODIFICATION ---
     @GetMapping("/employees/edit/{id}")
     public String showEditEmployeeForm(@PathVariable Long id, Model model) {
-        Employee employee = employeeService.getEmployeeById(id);
+        Users employee = employeeService.getEmployeeById(id);
         model.addAttribute("employee", employee);
         return "edit_employee";
     }
 
     @PostMapping("/employees/edit/{id}")
-    public String editEmployee(@PathVariable Long id, @ModelAttribute Employee employee) {
+    public String editEmployee(@PathVariable Long id, @ModelAttribute Users employee) {
         employee.setId(id);
         employeeService.saveEmployee(employee);
         return "redirect:/data";
@@ -242,7 +242,7 @@ public class DataController {
     // ---FILTRE ---
     @GetMapping("/employees/filter")
     public String filterEmployees(@RequestParam(required = false) String name, Model model) {
-        List<Employee> employees = (name == null) ? employeeService.getAllEmployees() : employeeService.getEmployeeByName(name);
+        List<Users> employees = (name == null) ? employeeService.getAllEmployees() : employeeService.getEmployeeByName(name);
         model.addAttribute("employees", employees);
 
         // Ajoute aussi les autres listes pour la page data.html

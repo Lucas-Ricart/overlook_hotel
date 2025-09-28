@@ -8,39 +8,39 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "evenement")
+@Table(name = "event")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nom", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "date", nullable = false)
     private String date;
 
-    @Column(name = "heure", nullable = false)
+    @Column(name = "time", nullable = false)
     private String time;
 
-    @Column(name = "prix", nullable = false)
+    @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "place_dispo", nullable = false)
-    private Integer availableSeats;
+    @Column(name = "available_slots", nullable = false)
+    private Integer availableSlots;
 
-    @Column(name = "nb_reserver", nullable = true)
-    private Integer reservations;
+    @Column(name = "booked_slots", nullable = true)
+    private Integer booked_Slots;
 
     public Event() {}
 
-    public Event(String name, String date, String time, Double price, Integer availableSeats, Integer reservations) {
+    public Event(String name, String date, String time, Double price, Integer availableSlots, Integer booked_Slots) {
         this.name = name;
         this.date = date;
         this.time = time;
         this.price = price;
-        this.availableSeats = availableSeats;
-        this.reservations = reservations;
+        this.availableSlots = availableSlots;
+        this.booked_Slots = booked_Slots;
     }
 
     public Long getId() { return id; }
@@ -58,9 +58,9 @@ public class Event {
     public Double getPrice() { return price; }
     public void setPrice(Double price) { this.price = price; }
 
-    public Integer getAvailableSeats() { return availableSeats; }
-    public void setAvailableSeats(Integer availableSeats) { this.availableSeats = availableSeats; }
+    public Integer getAvailableSlots() { return availableSlots; }
+    public void setAvailableSlots(Integer availableSlots) { this.availableSlots = availableSlots; }
 
-    public Integer getReservations() { return reservations; }
-    public void setReservations(Integer reservations) { this.reservations = reservations; }
+    public Integer getBooked_Slots() { return booked_Slots; }
+    public void setBooked_Slots(Integer booked_Slots) { this.booked_Slots = booked_Slots; }
 }

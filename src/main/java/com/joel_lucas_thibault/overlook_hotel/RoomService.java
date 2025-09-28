@@ -27,8 +27,8 @@ public class RoomService {
         roomRepository.deleteById(id);
     }
 
-    public List<Room> getRoomsByBeds(Integer beds) {
-        return roomRepository.findByBeds(beds);
+    public List<Room> getRoomsByCapacity(Integer capacity) {
+        return roomRepository.findByCapacity(capacity);
     }
 
     public List<Room> getAllRooms() { //ranger dans l'ordre croissant une base de donnée
