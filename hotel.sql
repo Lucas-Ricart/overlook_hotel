@@ -227,11 +227,12 @@ ALTER TABLE ONLY public.room ALTER COLUMN id SET DEFAULT nextval('public.room_id
 --
 
 COPY public.app_user (id, last_name, first_name, mail, password, role, loyalty_points) FROM stdin;
-1	Lennon	Bob	pyrobarbare@gmail.com	12345	client	0
-2	Emilio	Emile	emilEmilio@gmail.com	12345	client	0
-3	Carel	Rebeka	Rebekarel@hotmail.fr	12345	client	0
-4	Dupon	Dupont	Dupon.dupont@hotmail.fr	azerty	employee	0
-5	Jean	Montcuq	montcuq.bestville@gmail.com	$2a$10$z06lZoHwTd1RqXvs61HqFe01MveKw0CnvlNBLA7jgzhiw0GZQR8bu	manager	0
+1	Lennon	Bob	pyrobarbare@gmail.com	    $2a$10$GsrGo4KLKOW7mmTg9YkDy.QHACixYZEokJlZ6es3T6C.fxG/FAOfa	client	0
+2	Emilio	Emile	emilEmilio@gmail.com	$2a$10$GsrGo4KLKOW7mmTg9YkDy.QHACixYZEokJlZ6es3T6C.fxG/FAOfa	client	0
+3	Carel	Rebeka	Rebekarel@hotmail.fr	$2a$10$GsrGo4KLKOW7mmTg9YkDy.QHACixYZEokJlZ6es3T6C.fxG/FAOfa	client	0
+4	Dupon	Dupont	Dupon.dupont@hotmail.fr	$2a$10$/2fjrQB46lVRf8526PI44eR62FWdF.UBuJQ85UDiUL1FFHLlXnF9W	employee	0
+5	Jean	Montcuq	montcuq.bestville@gmail.com $2a$10$z06lZoHwTd1RqXvs61HqFe01MveKw0CnvlNBLA7jgzhiw0GZQR8bu	manager	0
+6   Tue     Thor    thortue@gmail.com           $2a$10$GsrGo4KLKOW7mmTg9YkDy.QHACixYZEokJlZ6es3T6C.fxG/FAOfa    client  0
 \.
 
 
